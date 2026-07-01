@@ -16,6 +16,8 @@
             --accent-hover: #2563eb;
             --border: #2e3c5a;
             --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
             --score-bg: #1e293b;
             --score-active: #3b82f6;
         }
@@ -25,12 +27,12 @@
             background-color: var(--bg-color);
             color: var(--text-primary);
             margin: 0;
-            padding: 2rem;
+            padding: 1rem 2rem;
             line-height: 1.5;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
@@ -38,7 +40,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             padding-bottom: 1rem;
             border-bottom: 1px solid var(--border);
         }
@@ -60,10 +62,10 @@
             background-color: var(--surface);
             color: var(--text-primary);
             border: 1px solid var(--border);
-            padding: 0.6rem 1.2rem;
+            padding: 0.5rem 1rem;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 500;
             transition: all 0.2s;
             display: inline-flex;
@@ -91,20 +93,21 @@
             background-color: var(--surface);
             border: 1px solid var(--border);
             border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            overflow-x: auto;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             text-align: left;
+            min-width: 1000px;
         }
 
         th, td {
-            padding: 1rem;
+            padding: 0.8rem 1rem;
             border-bottom: 1px solid var(--border);
-            vertical-align: middle;
+            vertical-align: top;
         }
 
         th {
@@ -112,8 +115,42 @@
             font-weight: 600;
             color: var(--text-secondary);
             font-size: 0.85rem;
+        }
+
+        .th-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            user-select: none;
+            margin-bottom: 0.5rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
+        }
+
+        .th-title:hover {
+            color: white;
+        }
+
+        .sort-icon {
+            font-size: 0.7rem;
+            color: var(--accent);
+        }
+
+        .filter-input {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border);
+            color: white;
+            padding: 0.4rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            box-sizing: border-box;
+        }
+
+        .filter-input:focus {
+            outline: none;
+            border-color: var(--accent);
         }
 
         tr:last-child td {
@@ -124,15 +161,49 @@
             background-color: rgba(255, 255, 255, 0.02);
         }
 
+        .col-id { width: 60px; font-weight: bold; color: var(--accent); }
+        .col-name { width: 250px; }
+        .col-status { width: 200px; }
+        .col-score { width: 380px; }
+        .col-comment { width: auto; }
+
         .filename {
             font-family: monospace;
             color: #60a5fa;
             font-size: 0.9rem;
+            display: block;
+            margin-bottom: 0.5rem;
+            word-break: break-all;
         }
+
+        /* Státusz gombok */
+        .status-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .status-btn {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s;
+        }
+        .status-btn:hover { background-color: var(--surface-hover); color: white; }
+        
+        .status-btn.active-danger { background-color: rgba(239, 68, 68, 0.2); border-color: var(--danger); color: #fca5a5; }
+        .status-btn.active-warning { background-color: rgba(245, 158, 11, 0.2); border-color: var(--warning); color: #fcd34d; }
+        .status-btn.active-success { background-color: rgba(16, 185, 129, 0.2); border-color: var(--success); color: #6ee7b7; }
 
         /* Kattintható számok dizájnja */
         .score-container {
             display: flex;
+            flex-wrap: wrap;
             gap: 4px;
         }
 
@@ -140,8 +211,8 @@
             background-color: var(--score-bg);
             border: 1px solid var(--border);
             color: var(--text-secondary);
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             border-radius: 4px;
             display: flex;
             align-items: center;
@@ -162,12 +233,11 @@
             background-color: var(--score-active);
             border-color: var(--score-active);
             color: white;
-            box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+            box-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
         }
 
-        .comment-input {
+        .comment-textarea {
             width: 100%;
-            max-width: 400px;
             background-color: var(--bg-color);
             border: 1px solid var(--border);
             color: white;
@@ -175,11 +245,12 @@
             border-radius: 6px;
             font-family: inherit;
             resize: vertical;
-            min-height: 40px;
+            min-height: 80px;
             box-sizing: border-box;
+            font-size: 0.9rem;
         }
 
-        .comment-input:focus {
+        .comment-textarea:focus {
             outline: none;
             border-color: var(--accent);
         }
@@ -212,7 +283,7 @@
     <header>
         <div>
             <h1>Piócás Weboldal Variációk</h1>
-            <div class="header-desc">Különböző AI modellekkel generált verziók listája. Pontozd őket 0-10-ig és írd le a véleményed!</div>
+            <div class="header-desc">Dinamikus lista (sorszámozott, szűrhető, rendezhető).</div>
         </div>
         <div>
             <button class="btn btn-primary" onclick="exportData()">
@@ -226,14 +297,30 @@
         <table>
             <thead>
                 <tr>
-                    <th>Fájlnév / Verzió</th>
-                    <th>Művelet</th>
-                    <th>Pontszám (0-10)</th>
-                    <th>Megjegyzés (Mi tetszik/Mi nem?)</th>
+                    <th class="col-id">
+                        <div class="th-title" onclick="handleSort('id')"># <span id="sort-icon-id" class="sort-icon"></span></div>
+                        <input type="text" class="filter-input" placeholder="Keres..." oninput="handleFilter('id', this.value)">
+                    </th>
+                    <th class="col-name">
+                        <div class="th-title" onclick="handleSort('file')">Fájlnév <span id="sort-icon-file" class="sort-icon"></span></div>
+                        <input type="text" class="filter-input" placeholder="Keres..." oninput="handleFilter('file', this.value)">
+                    </th>
+                    <th class="col-status">
+                        <div class="th-title" onclick="handleSort('status')">Állapot <span id="sort-icon-status" class="sort-icon"></span></div>
+                        <input type="text" class="filter-input" placeholder="Keres..." oninput="handleFilter('status', this.value)">
+                    </th>
+                    <th class="col-score">
+                        <div class="th-title" onclick="handleSort('score')">Pontszám <span id="sort-icon-score" class="sort-icon"></span></div>
+                        <input type="text" class="filter-input" placeholder="Keres (pl. 10)..." oninput="handleFilter('score', this.value)">
+                    </th>
+                    <th class="col-comment">
+                        <div class="th-title" onclick="handleSort('comment')">Megjegyzés <span id="sort-icon-comment" class="sort-icon"></span></div>
+                        <input type="text" class="filter-input" placeholder="Keres..." oninput="handleFilter('comment', this.value)">
+                    </th>
                 </tr>
             </thead>
             <tbody id="table-body">
-                <tr><td colspan="4" style="text-align: center; color: var(--text-secondary);">Betöltés...</td></tr>
+                <tr><td colspan="5" style="text-align: center; color: var(--text-secondary);">Betöltés...</td></tr>
             </tbody>
         </table>
     </div>
@@ -245,109 +332,231 @@
     const tbody = document.getElementById('table-body');
     const storageKey = 'kriszi_pioca_ratings';
 
-    // Betöltjük a korábban mentett értékeléseket
+    // Állapotok tárolása a JS-ben
+    let rawFiles = []; // A JSON-ből beolvasott nyers fájllista
+    let processedData = []; // Az adatok, amiket megjelenítünk (id, file, score, comment, status)
+    
+    // Szűrési és rendezési paraméterek
+    let currentSort = { col: 'id', asc: true };
+    let currentFilters = { id: '', file: '', status: '', score: '', comment: '' };
+
+    // Betöltjük a korábban mentett értékeléseket localStorage-ből
     let savedData = JSON.parse(localStorage.getItem(storageKey)) || {};
 
-    // Fájlok dinamikus betöltése
+    // 1. LÉPÉS: Fájlok betöltése
     async function loadFiles() {
         try {
             const response = await fetch('files.json');
             if (!response.ok) throw new Error("files.json nem található");
-            const files = await response.json();
-            renderTable(files);
+            
+            rawFiles = await response.json();
+            // Sorba rendezzük ABC szerint, így mindig fix lesz a sorszám (ID)
+            rawFiles.sort(); 
+            
+            buildData();
+            renderTable();
         } catch (error) {
-            console.log("Nem sikerült betölteni a files.json-t. Lehet, hogy még nem futtattad le a feltöltő szkriptet?");
-            tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: #ef4444;">Hiba: Nem találom a fájl listát (files.json). Kérlek futtasd le a 'feltoltes.bat' szkriptet!</td></tr>`;
+            console.log("Hiba: ", error);
+            tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: #ef4444;">Hiba: Nem találom a fájl listát (files.json). Kérlek futtasd le a 'feltoltes.bat' szkriptet!</td></tr>`;
         }
     }
 
-    // Táblázat generálása
-    function renderTable(files) {
-        tbody.innerHTML = '';
-        
-        files.forEach((file) => {
-            const tr = document.createElement('tr');
-            const data = savedData[file] || { score: null, comment: '' };
+    // 2. LÉPÉS: Adatszerkezet felépítése
+    function buildData() {
+        processedData = rawFiles.map((file, index) => {
+            const data = savedData[file] || { score: null, comment: '', status: '' };
+            return {
+                id: index + 1, // Fix sorszám az ABC sorrend alapján
+                file: file,
+                score: data.score,
+                comment: data.comment || '',
+                status: data.status || ''
+            };
+        });
+    }
 
-            // Generáljuk a 0-10 gombokat
+    // 3. LÉPÉS: Rendezés beállítása
+    window.handleSort = function(col) {
+        if (currentSort.col === col) {
+            currentSort.asc = !currentSort.asc;
+        } else {
+            currentSort.col = col;
+            currentSort.asc = true;
+        }
+        
+        // Frissítjük a nyilakat
+        document.querySelectorAll('.sort-icon').forEach(el => el.innerHTML = '');
+        document.getElementById(`sort-icon-${col}`).innerHTML = currentSort.asc ? '▲' : '▼';
+
+        renderTable();
+    }
+
+    // 4. LÉPÉS: Szűrés beállítása
+    window.handleFilter = function(col, value) {
+        currentFilters[col] = value.toLowerCase();
+        renderTable();
+    }
+
+    // 5. LÉPÉS: Táblázat generálása (Szűrés és Rendezés után)
+    function renderTable() {
+        // --- Szűrés (Filter) ---
+        let displayData = processedData.filter(row => {
+            if (currentFilters.id && !row.id.toString().includes(currentFilters.id)) return false;
+            if (currentFilters.file && !row.file.toLowerCase().includes(currentFilters.file)) return false;
+            
+            // Státusz szöveges keresése
+            let statusText = "";
+            if (row.status === 'danger') statusText = "hibás";
+            if (row.status === 'warning') statusText = "részben hibás";
+            if (row.status === 'success') statusText = "jó";
+            if (currentFilters.status && !statusText.includes(currentFilters.status)) return false;
+
+            if (currentFilters.score && (row.score === null || !row.score.toString().includes(currentFilters.score))) return false;
+            if (currentFilters.comment && !row.comment.toLowerCase().includes(currentFilters.comment)) return false;
+            return true;
+        });
+
+        // --- Rendezés (Sort) ---
+        displayData.sort((a, b) => {
+            let valA = a[currentSort.col];
+            let valB = b[currentSort.col];
+
+            // Null pontszámokat a végére vagy elejére soroljuk
+            if (valA === null) valA = -1;
+            if (valB === null) valB = -1;
+
+            if (typeof valA === 'string') valA = valA.toLowerCase();
+            if (typeof valB === 'string') valB = valB.toLowerCase();
+
+            if (valA < valB) return currentSort.asc ? -1 : 1;
+            if (valA > valB) return currentSort.asc ? 1 : -1;
+            return 0;
+        });
+
+        // --- DOM Generálás ---
+        tbody.innerHTML = '';
+        if (displayData.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-secondary);">Nincs találat a szűrések alapján.</td></tr>`;
+            return;
+        }
+
+        displayData.forEach(row => {
+            const tr = document.createElement('tr');
+            
+            // Státusz gombok HTML
+            const btnDanger = row.status === 'danger' ? 'active-danger' : '';
+            const btnWarning = row.status === 'warning' ? 'active-warning' : '';
+            const btnSuccess = row.status === 'success' ? 'active-success' : '';
+
+            // Pontszám gombok HTML
             let scoreButtonsHtml = '<div class="score-container">';
             for(let i = 0; i <= 10; i++) {
-                const isActive = data.score == i ? 'active' : '';
-                scoreButtonsHtml += `<div class="score-btn ${isActive}" onclick="handleScoreClick(this, '${file}', ${i})">${i}</div>`;
+                const isActive = row.score == i ? 'active' : '';
+                scoreButtonsHtml += `<div class="score-btn ${isActive}" onclick="handleScoreClick('${row.file}', ${i})">${i}</div>`;
             }
             scoreButtonsHtml += '</div>';
 
             tr.innerHTML = `
-                <td><span class="filename">${file}</span></td>
-                <td>
-                    <a href="${file}" target="_blank" class="btn">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                <td class="col-id">#${row.id}</td>
+                <td class="col-name">
+                    <span class="filename">${row.file}</span>
+                    <a href="${row.file}" target="_blank" class="btn">
                         Megnyitás
                     </a>
                 </td>
-                <td>
+                <td class="col-status">
+                    <div class="status-container">
+                        <button class="status-btn ${btnDanger}" onclick="handleStatusClick('${row.file}', 'danger')">❌ Hibás oldal</button>
+                        <button class="status-btn ${btnWarning}" onclick="handleStatusClick('${row.file}', 'warning')">⚠️ Részben hibás</button>
+                        <button class="status-btn ${btnSuccess}" onclick="handleStatusClick('${row.file}', 'success')">✅ Nincs hiba</button>
+                    </div>
+                </td>
+                <td class="col-score">
                     ${scoreButtonsHtml}
                 </td>
-                <td>
-                    <input type="text" class="comment-input" value="${data.comment}" placeholder="Ide írd a véleményed..." oninput="saveComment('${file}', this.value)">
+                <td class="col-comment">
+                    <textarea class="comment-textarea" placeholder="Ide írd a részletes véleményed, vagy hogy mi a hiba..." oninput="saveComment('${row.file}', this.value)">${row.comment}</textarea>
                 </td>
             `;
             tbody.appendChild(tr);
         });
     }
 
-    // Pontszámra kattintás kezelése
-    window.handleScoreClick = function(element, file, selectedScore) {
-        if (!savedData[file]) {
-            savedData[file] = { score: null, comment: '' };
+    // --- ESEMÉNYKEZELŐK ---
+
+    window.handleStatusClick = function(file, newStatus) {
+        const data = savedData[file] || { score: null, comment: '', status: '' };
+        
+        // Ha ugyanarra kattint, akkor törli a státuszt (toggle)
+        if (data.status === newStatus) {
+            data.status = '';
+        } else {
+            data.status = newStatus;
         }
 
-        const currentScore = savedData[file].score;
+        savedData[file] = data;
+        localStorage.setItem(storageKey, JSON.stringify(savedData));
+        
+        // Frissítjük a memóriában lévő tömböt is, majd újra renderelünk
+        const rowData = processedData.find(r => r.file === file);
+        if(rowData) rowData.status = data.status;
+        renderTable();
+    }
+
+    window.handleScoreClick = function(file, selectedScore) {
+        const data = savedData[file] || { score: null, comment: '', status: '' };
+        const currentScore = data.score;
 
         // Ha már volt pontozva és másra kattint, kérdezzünk rá
         if (currentScore !== null && currentScore != selectedScore) {
             const confirmed = confirm(`Ezt az oldalt már értékelted (${currentScore} pont). Biztosan módosítod ${selectedScore} pontra?`);
-            if (!confirmed) return; // Ha mégsem, megszakítjuk
+            if (!confirmed) return;
         }
 
-        // Pontszám frissítése
-        savedData[file].score = selectedScore;
+        data.score = selectedScore;
+        savedData[file] = data;
         localStorage.setItem(storageKey, JSON.stringify(savedData));
 
-        // Gombok vizuális frissítése (csak ebben a sorban)
-        const container = element.parentElement;
-        const allBtns = container.querySelectorAll('.score-btn');
-        allBtns.forEach(btn => btn.classList.remove('active'));
-        element.classList.add('active');
+        const rowData = processedData.find(r => r.file === file);
+        if(rowData) rowData.score = data.score;
+        renderTable();
     }
 
-    // Megjegyzés mentése
     window.saveComment = function(file, commentText) {
-        if (!savedData[file]) {
-            savedData[file] = { score: null, comment: '' };
-        }
-        savedData[file].comment = commentText;
+        const data = savedData[file] || { score: null, comment: '', status: '' };
+        data.comment = commentText;
+        savedData[file] = data;
         localStorage.setItem(storageKey, JSON.stringify(savedData));
+
+        const rowData = processedData.find(r => r.file === file);
+        if(rowData) rowData.comment = data.comment;
     }
 
-    // Exportálás vágólapra
+    // --- EXPORTÁLÁS ---
     window.exportData = function() {
-        const currentData = JSON.parse(localStorage.getItem(storageKey)) || {};
-        let exportText = "📋 PIÓCÁS OLDALAK ÉRTÉKELÉSEI:\n\n";
+        let exportText = "📋 PIÓCÁS OLDALAK ÉRTÉKELÉSEI ÉS HIBÁI:\n\n";
         let hasData = false;
 
-        for (const [file, data] of Object.entries(currentData)) {
-            if (data.score !== null || (data.comment && data.comment.trim() !== '')) {
+        // Az eredeti processedData alapján megyünk végig, hogy ID sorrendben legyen az export
+        processedData.forEach(row => {
+            const { id, file, score, comment, status } = row;
+            
+            if (score !== null || (comment && comment.trim() !== '') || status !== '') {
                 hasData = true;
-                exportText += `🔹 ${file}\n`;
-                if (data.score !== null) exportText += `   Pontszám: ${data.score}/10\n`;
-                if (data.comment && data.comment.trim() !== '') exportText += `   Megjegyzés: ${data.comment}\n`;
+                exportText += `🔹 [#${id}] ${file}\n`;
+                
+                if (status === 'danger') exportText += `   Állapot: ❌ HIBÁS\n`;
+                if (status === 'warning') exportText += `   Állapot: ⚠️ RÉSZBEN HIBÁS\n`;
+                if (status === 'success') exportText += `   Állapot: ✅ JÓ\n`;
+                
+                if (score !== null) exportText += `   Pontszám: ${score}/10\n`;
+                if (comment && comment.trim() !== '') exportText += `   Megjegyzés: ${comment.trim()}\n`;
                 exportText += "\n";
             }
-        }
+        });
 
         if (!hasData) {
-            exportText = "Még nincs kitöltve egyetlen értékelés sem. (Ha csak próbálod a gombot, tudsz másolni, de jelenleg üres!)";
+            exportText = "Még nincs kitöltve egyetlen értékelés sem.";
         }
 
         // Vágólapra másolás
@@ -355,22 +564,26 @@
             navigator.clipboard.writeText(exportText).then(() => {
                 showNotification();
             }).catch(err => {
-                alert("Nem sikerült a vágólapra másolni. Kérlek másold ki kézzel az alábbi ablakból:\n\n" + exportText);
+                fallbackCopy(exportText);
             });
         } else {
-            const textArea = document.createElement("textarea");
-            textArea.value = exportText;
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-            try {
-                document.execCommand('copy');
-                showNotification();
-            } catch (err) {
-                alert("Kérlek másold ki kézzel az alábbi ablakból:\n\n" + exportText);
-            }
-            document.body.removeChild(textArea);
+            fallbackCopy(exportText);
         }
+    }
+
+    function fallbackCopy(text) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            showNotification();
+        } catch (err) {
+            alert("Kérlek másold ki kézzel az alábbi ablakból:\n\n" + text);
+        }
+        document.body.removeChild(textArea);
     }
 
     function showNotification() {
