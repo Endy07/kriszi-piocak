@@ -107,6 +107,12 @@
       "scoreKriszi": null,
       "comment": "",
       "status": ""
+    },
+    "Qwen3.6-28B-REAP20-A3B-Q4_K_M_Kriszi_Hermes_1.html": {
+      "scoreEndi": 9,
+      "scoreKriszi": null,
+      "comment": "",
+      "status": ""
     }
   },
   "blacklist": [
